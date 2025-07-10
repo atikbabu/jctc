@@ -1,0 +1,32 @@
+
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+    background: white;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-header {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 1rem;
+    font-weight: bold;
+  }
+
+  .print-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .print-table th,
+  .print-table td {
+    border: 1px solid #ccc;
+    padding: 6px;
+    font-size: 12px;
+    text-align: center;
+  }
+}
