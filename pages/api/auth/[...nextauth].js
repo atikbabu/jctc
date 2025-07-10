@@ -13,15 +13,29 @@ export const authOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
+        console.log('Attempting to connect to DB for authorization...');
         await dbConnect();
+        console.log('DB connection attempted.');
+
         const user = await User.findOne({ username: credentials.username });
-        if (!user) return null;
+        console.log('User found:', user ? user.username : 'None');
+
+        if (!user) {
+          console.log('User not found.');
+          return null;
+        }
         console.log(`User ${user.username} isActive: ${user.isActive}`);
         if (!user.isActive) {
+          console.log('User is inactive.');
           throw new Error('/login?message=inactive');
         }
         const isMatch = await bcrypt.compare(credentials.password, user.password);
-        if (!isMatch) return null;
+        console.log('Password match:', isMatch);
+        if (!isMatch) {
+          console.log('Password does not match.');
+          return null;
+        }
+        console.log('User authorized.');
         return { id: user._id.toString(), name: user.name, role: user.role };
       },
     }),
