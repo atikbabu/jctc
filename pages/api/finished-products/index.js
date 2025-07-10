@@ -6,7 +6,9 @@ import { getSession } from 'next-auth/react';
 export default async function handler(req, res) {
   const session = await getSession({ req });
 
-    if (!session || !['admin', 'production_operator'].includes(session.user.role)) {
+  if (!session || !['admin', 'production_operator'].includes(session.user.role)) {
+    return res.status(403).json({ error: 'Access Denied' });
+  }
 
   await dbConnect();
 
